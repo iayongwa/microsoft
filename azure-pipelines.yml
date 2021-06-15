@@ -46,7 +46,6 @@ stages:
         ArtifactName: LatestImage
         Parallel: true
         ParallelCount: 10
-        StoreAsTar: true
     
 # Move created image to the Staging Directory 
     - task: CmdLine@2
