@@ -1,0 +1,84 @@
+# Multi-Stage pipeline which builds a Docker image, scan it with Snyk, have Snyk report reviewed by security team before pushing image to ACR 
+
+name: $(BuildDefinitionName)_$(date:yyyMMdd)$(rev:.r)
+
+trigger: none
+# - master
+
+resources:
+- repo: self
+
+pr: none
+
+# Linux OS self-hosted Agent Pool
+pool: 
+  name: Selfhosted-PRC382-AKS
+  demands:
+  - agent.os -equals Windows_NT 
+
+variables:
+- group: PRC382-Variables
+
+
+# Build Stage
+stages: 
+- stage: PullScan
+  displayName: Pull image from GitHub and scan it 
+  jobs:
+  - job: PullScan
+    displayName: Pull image from GitHub and scan it
+    steps:
+    
+
+    # # Move created image to the Staging Directory 
+    # - task: CmdLine@2
+    #   inputs:
+    #     script: |
+    #       docker pull $(imageRepository2):$(latestTag)
+    #       docker image save $(imageRepository2):$(latestTag) -o $(Build.ArtifactStagingDirectory)/$(imageRepository2)
+
+    
+    # Publish image to Staging Directory so that it can be consumed by Deploy Stage
+    - task: PublishBuildArtifacts@1
+      displayName: Publish latest image 
+      inputs:
+        PathtoPublish: $(Build.ArtifactStagingDirectory)
+        ArtifactName: LatestImage
+        Parallel: true
+        ParallelCount: 10
+        StoreAsTar: true
+    
+# Move created image to the Staging Directory 
+    - task: CmdLine@2
+      inputs:
+        script: |
+          docker push $(containerRegistry)/mcr.microsoft.com/windows/servercore:latest
+
+# # Deploy Stage
+# - stage: DeployACR
+#   displayName: Deploy image to ACR
+#   dependsOn: PullScan
+#   condition: succeeded()
+#   jobs:
+#   - deployment: Deploy
+#     displayName: Deploy image to ACR
+#     environment: DeployACR
+#     timeoutInMinutes: 360
+#     strategy:
+#       runOnce:
+#         deploy:
+#           steps:
+#           - checkout: none
+
+#           # Download Artifact from Build Stage
+#           - download: current
+#             artifact: LatestImage
+#             displayName: Download artifact containing latest image from Build Stage
+
+#           # Push image to Azure Container Registry (ACR) 
+#           - task: Docker@2
+#             displayName: Push the docker image to ACR
+#             inputs:
+#               command: push
+#               repository: ubuntu:latest
+#               containerRegistry: $(dockerRegistryServiceConnection)
