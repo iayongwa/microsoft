@@ -96,5 +96,5 @@ stages:
             displayName: Push the docker image to ACR
             inputs:
               command: push
-              repository: mcr.microsoft.com/windows/servercore:ltsc2019
+              repository: mcr.microsoft.com/windows/servercore
               containerRegistry: ACRegistry-PRC382-InternalDevelopment
