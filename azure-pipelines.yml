@@ -16,8 +16,14 @@ pool:
   demands:
   - agent.os -equals Windows_NT 
 
+# variables:
+# - group: PRC382-Variables
 variables:
-- group: PRC382-Variables
+  # Container registry service connection established during pipeline creation
+  dockerRegistryServiceConnection: 'b291edea-7e2e-4b00-9c0c-5c8d87b1d1ed'
+  imageRepository: 'uipathrobot'
+  containerRegistry: 'uiacrrtidevsprc38201.azurecr.io'
+  dockerfilePath: '**/dockerfile'
 
 
 # Build Stage
