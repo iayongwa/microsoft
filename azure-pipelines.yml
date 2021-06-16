@@ -35,7 +35,7 @@ stages:
         command: build
         repository: microsoft
         dockerfile: $(BuildSources.Directory)/microsoft/dockerfile
-        containerRegistry: AKS containers
+        containerRegistry: DockerRegistry-PRC382-InternalDevelopment
         tags: |
           $(tag)
           $(latestTag)
