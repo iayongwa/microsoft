@@ -47,10 +47,12 @@ stages:
     - task: CmdLine@2
       inputs:
         script: |
-          docker pull israelayongwa/uipathrobot:latest
-       # docker pull mcr.microsoft.com/windows/servercore:ltsc2019
-       #   docker tag mcr.microsoft.com/windows/servercore:ltsc2019 servercore:latest
+          docker tag mcr.microsoft.com/windows/servercore:ltsc2019 servercore:latest
        #   docker image save servercore:latest -o $(Build.ArtifactStagingDirectory)/servercore
+       # docker pull mcr.microsoft.com/windows/servercore:ltsc2019
+       #   docker pull israelayongwa/uipathrobot:latest
+
+
 
     
 #     # Publish image to Staging Directory so that it can be consumed by Deploy Stage
