@@ -48,7 +48,7 @@ stages:
         script: |
           docker pull mcr.microsoft.com/windows/servercore:ltsc2019
           docker tag mcr.microsoft.com/windows/servercore:ltsc2019 servercore:latest
- #         docker image save servercore:latest -o $(Build.ArtifactStagingDirectory)/servercore
+          docker image save servercore:latest -o $(Build.ArtifactStagingDirectory)/servercore
        # docker pull mcr.microsoft.com/windows/servercore:ltsc2019
        #   docker pull israelayongwa/uipathrobot:latest
 
@@ -96,5 +96,5 @@ stages:
             displayName: Push the docker image to ACR
             inputs:
               command: push
-              repository: servercore
+              repository: mcr.microsoft.com/windows/servercore:ltsc2019
               containerRegistry: ACRegistry-PRC382-InternalDevelopment
