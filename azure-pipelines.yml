@@ -48,7 +48,7 @@ stages:
         script: |
           docker pull mcr.microsoft.com/windows/servercore:ltsc2019
           docker tag mcr.microsoft.com/windows/servercore:ltsc2019 $(containerRegistry)/servercoreltsc2019:latest
-          docker image save $(containerRegistry)/servercore:latest -o $(Build.ArtifactStagingDirectory)
+          docker image save $(containerRegistry)/servercoreltsc2019:latest -o $(Build.ArtifactStagingDirectory)
        # docker pull mcr.microsoft.com/windows/servercore:ltsc2019
        #   docker pull israelayongwa/uipathrobot:latest
 
