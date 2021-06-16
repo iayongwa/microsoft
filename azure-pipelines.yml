@@ -43,11 +43,16 @@ stages:
     #     dockerfile: $(dockerfilePath)
     #     containerRegistry: DockerRegistry-PRC382-InternalDevelopment
 
+    - task: Docker@2
+      displayName: Login to Docker HUb
+      inputs:
+        command: login
+        containerRegistry: DockerRegistry-PRC382-InternalDevelopment
+
     # Pull and move created image to the Staging Directory 
     - task: CmdLine@2
       inputs:
         script: |
-          docker login
           docker pull israelayongwa/uipath-robot:latest
 #          docker tag mcr.microsoft.com/windows/servercore:ltsc2019 servercore:latest
  #         docker image save servercore:latest -o $(Build.ArtifactStagingDirectory)/servercore
