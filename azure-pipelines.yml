@@ -22,8 +22,8 @@ variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: 'b291edea-7e2e-4b00-9c0c-5c8d87b1d1ed'
   imageRepository: 'uipathrobot'
-  containerRegistry: 'uiacrrtidevsprc38201.azurecr.io'
-  dockerfilePath: '**/dockerfile'
+  containerRegistry: 'acrrtidevsprc38201.azurecr.io'
+  dockerfilePath: '**/microsoft/dockerfile'
 
 
 # Build Stage
@@ -40,7 +40,7 @@ stages:
       inputs:
         command: build
         repository: microsoft
-        dockerfile: $(BuildSources.Directory)/microsoft/dockerfile
+        dockerfile: $(dockerfilePath)
         containerRegistry: DockerRegistry-PRC382-InternalDevelopment
         tags: |
           $(tag)
