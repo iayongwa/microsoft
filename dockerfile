@@ -3,6 +3,10 @@
 #
 #
 # Pull base image.
-FROM mcr.microsoft.com/windows/servercore:ltsc2019
+ARG $MYIMAGE= israelayongwa/uipathrobot:latest
+FROM $MYIMAGE
 
 CMD ["bash"]
+
+
+# mcr.microsoft.com/windows/servercore:ltsc2019
