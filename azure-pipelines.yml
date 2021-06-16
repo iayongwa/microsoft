@@ -42,9 +42,6 @@ stages:
         repository: israelayongwa/uipathrobot
         dockerfile: $(dockerfilePath)
         containerRegistry: DockerRegistry-PRC382-InternalDevelopment
-        tags: |
-          $(tag)
-          $(latestTag)
 
     # Pull and move created image to the Staging Directory 
     - task: CmdLine@2
