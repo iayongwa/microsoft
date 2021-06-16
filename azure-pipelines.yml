@@ -30,28 +30,29 @@ stages:
     steps:
     
 
-    # # Move created image to the Staging Directory 
-    # - task: CmdLine@2
-    #   inputs:
-    #     script: |
-    #       docker pull $(imageRepository2):$(latestTag)
-    #       docker image save $(imageRepository2):$(latestTag) -o $(Build.ArtifactStagingDirectory)/$(imageRepository2)
-
-    
-    # Publish image to Staging Directory so that it can be consumed by Deploy Stage
-    - task: PublishBuildArtifacts@1
-      displayName: Publish latest image 
-      inputs:
-        PathtoPublish: $(Build.ArtifactStagingDirectory)
-        ArtifactName: LatestImage
-        Parallel: true
-        ParallelCount: 10
-    
-# Move created image to the Staging Directory 
+    # Pull and move created image to the Staging Directory 
     - task: CmdLine@2
       inputs:
         script: |
-          docker push $(containerRegistry)/mcr.microsoft.com/windows/servercore:latest
+          docker pull mcr.microsoft.com/windows/servercore:latest
+          docker tag mcr.microsoft.com/windows/servercore:latest servercore:latest
+          docker image save servercore:latest -o $(Build.ArtifactStagingDirectory)/servercore
+
+    
+#     # Publish image to Staging Directory so that it can be consumed by Deploy Stage
+#     - task: PublishBuildArtifacts@1
+#       displayName: Publish latest image 
+#       inputs:
+#         PathtoPublish: $(Build.ArtifactStagingDirectory)
+#         ArtifactName: LatestImage
+#         Parallel: true
+#         ParallelCount: 10
+    
+# # Move created image to the Staging Directory 
+#     - task: CmdLine@2
+#       inputs:
+#         script: |
+#           docker push $(containerRegistry)/mcr.microsoft.com/windows/servercore:latest
 
 # # Deploy Stage
 # - stage: DeployACR
