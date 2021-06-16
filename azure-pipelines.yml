@@ -96,5 +96,5 @@ stages:
             displayName: Push the docker image to ACR
             inputs:
               command: push
-              repository: webmarinetest
+              repository: israelayongwa/uipathrobot
               containerRegistry: ACRegistry-PRC382-InternalDevelopment
