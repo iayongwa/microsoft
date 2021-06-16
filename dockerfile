@@ -3,7 +3,7 @@
 #
 #
 # Pull base image.
-ARG $MYIMAGE= israelayongwa/uipathrobot:latest
+ARG $MYIMAGE= https://hub.docker.com/repository/docker/israelayongwa/uipathrobot:latest
 FROM $MYIMAGE
 
 CMD ["bash"]
