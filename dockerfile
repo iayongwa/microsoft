@@ -3,8 +3,8 @@
 #
 #
 # Pull base image.
-ARG $MYIMAGE= israelayongwa/uipathrobot:latest
-FROM $MYIMAGE
+# ARG $MYIMAGE= israelayongwa/uipathrobot:latest
+FROM israelayongwa/uipathrobot:latest
 
 CMD ["bash"]
 
