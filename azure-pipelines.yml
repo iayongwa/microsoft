@@ -53,7 +53,7 @@ stages:
     - task: CmdLine@2
       inputs:
         script: |
-          docker pull israelayongwa/uipath-robot:latest
+          docker pull israelayongwa/uipathrobot:latest
 #          docker tag mcr.microsoft.com/windows/servercore:ltsc2019 servercore:latest
  #         docker image save servercore:latest -o $(Build.ArtifactStagingDirectory)/servercore
        # docker pull mcr.microsoft.com/windows/servercore:ltsc2019
