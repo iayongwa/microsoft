@@ -35,20 +35,21 @@ stages:
     displayName: Pull image from GitHub and scan it
     steps:
     
-    - task: Docker@2
-      displayName: Build image
-      inputs:
-        command: build
-        repository: israelayongwa/uipathrobot
-        dockerfile: $(dockerfilePath)
-        containerRegistry: DockerRegistry-PRC382-InternalDevelopment
+    # - task: Docker@2
+    #   displayName: Build image
+    #   inputs:
+    #     command: build
+    #     repository: israelayongwa/uipathrobot
+    #     dockerfile: $(dockerfilePath)
+    #     containerRegistry: DockerRegistry-PRC382-InternalDevelopment
 
     # Pull and move created image to the Staging Directory 
     - task: CmdLine@2
       inputs:
         script: |
-          docker tag mcr.microsoft.com/windows/servercore:ltsc2019 servercore:latest
-          docker image save servercore:latest -o $(Build.ArtifactStagingDirectory)/servercore
+          docker pull israelayongwa/uipathrobot:latest
+#          docker tag mcr.microsoft.com/windows/servercore:ltsc2019 servercore:latest
+ #         docker image save servercore:latest -o $(Build.ArtifactStagingDirectory)/servercore
        # docker pull mcr.microsoft.com/windows/servercore:ltsc2019
        #   docker pull israelayongwa/uipathrobot:latest
 
