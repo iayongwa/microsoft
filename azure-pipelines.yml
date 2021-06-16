@@ -20,11 +20,11 @@ pool:
 # - group: PRC382-Variables
 variables:
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: 'b291edea-7e2e-4b00-9c0c-5c8d87b1d1ed'
-  imageRepository: 'uipathrobot'
-  containerRegistry: 'acrrtidevsprc38201.azurecr.io'
-  dockerfilePath: '**/dockerfile'
-
+  dockerRegistryServiceConnection:: DockerRegistry-PRC382-InternalDevelopment
+ # dockerRegistryServiceConnection: 'b291edea-7e2e-4b00-9c0c-5c8d87b1d1ed'
+  imageRepository: 'israelayongwa/uipathrobot'
+  containerRegistry: 'Container Registry'
+  dockerfilePath: '**/dockerfile'  
 
 # Build Stage
 stages: 
@@ -39,9 +39,9 @@ stages:
       displayName: Build image
       inputs:
         command: build
-        repository: microsoft
+        repository: $(imageRepository)
         dockerfile: $(dockerfilePath)
-        containerRegistry: DockerRegistry-PRC382-InternalDevelopment
+        containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
           $(latestTag)
