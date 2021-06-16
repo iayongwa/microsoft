@@ -21,38 +21,21 @@ variables:
 
 # Build Stage
 stages: 
-- stage: PullScan
+- stage: PullTag
   displayName: Pull image from GitHub and scan it 
   jobs:
   - job: PullScan
     displayName: Pull image from GitHub and scan it
     steps:
     
-    # - task: Docker@2
-    #   displayName: Build image
-    #   inputs:
-    #     command: build
-    #     repository: israelayongwa/uipathrobot
-    #     dockerfile: $(dockerfilePath)
-    #     containerRegistry: DockerRegistry-PRC382-InternalDevelopment
 
-    # - task: Docker@2
-    #   displayName: Login to Docker Hub
-    #   inputs:
-    #     command: login
-    #     containerRegistry: DockerRegistry-PRC382-InternalDevelopment
-
-    # Pull and move created image to the Staging Directory 
+    # Pull base Windows image, tag it with ACR repo name and move it to Staging Directory for publishing 
     - task: CmdLine@2
       inputs:
         script: |
           docker pull mcr.microsoft.com/windows/servercore:ltsc2019
           docker tag mcr.microsoft.com/windows/servercore:ltsc2019 $(containerRegistry)/servercoreltsc2019:latest
           docker image save $(containerRegistry)/servercoreltsc2019:latest -o $(Build.ArtifactStagingDirectory)
-       # docker pull mcr.microsoft.com/windows/servercore:ltsc2019
-       #   docker pull israelayongwa/uipathrobot:latest
-
-
 
     
     # Publish image to Staging Directory so that it can be consumed by Deploy Stage
@@ -63,17 +46,11 @@ stages:
         ArtifactName: LatestImage
         Parallel: true
         ParallelCount: 10
-    
-# # Move created image to the Staging Directory 
-#     - task: CmdLine@2
-#       inputs:
-#         script: |
-#           docker push $(containerRegistry)/mcr.microsoft.com/windows/servercore:latest
 
 # Deploy Stage
 - stage: DeployACR
   displayName: Deploy image to ACR
-  dependsOn: PullScan
+  dependsOn: PullTag
   condition: succeeded()
   jobs:
   - deployment: Deploy
@@ -100,4 +77,4 @@ stages:
               scriptLocation: inlineScript
               inlineScript: |
                 docker images
-                docker push $(containerRegistry)/servercore:latest
+                docker push $(containerRegistry)/servercoreltsc2019:latest
