@@ -22,7 +22,7 @@ variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection:: DockerRegistry-PRC382-InternalDevelopment
  # dockerRegistryServiceConnection: 'b291edea-7e2e-4b00-9c0c-5c8d87b1d1ed'
-  imageRepository: 'israelayongwa/uipathrobot'
+  imageRepository: israelayongwa/uipathrobot
   containerRegistry: 'Container Registry'
   dockerfilePath: '**/dockerfile'  
 
@@ -39,9 +39,9 @@ stages:
       displayName: Build image
       inputs:
         command: build
-        repository: $(imageRepository)
+        repository: israelayongwa/uipathrobot
         dockerfile: $(dockerfilePath)
-        containerRegistry: $(dockerRegistryServiceConnection)
+        containerRegistry: DockerRegistry-PRC382-InternalDevelopment
         tags: |
           $(tag)
           $(latestTag)
