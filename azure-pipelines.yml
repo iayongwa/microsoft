@@ -44,6 +44,7 @@ stages:
         scriptType: ps
         scriptLocation: inlineScript
         inlineScript: |
+          az acr login --name $(containerRegistry)
           docker images
           docker push $(containerRegistry)/servercore2019:latest
 
