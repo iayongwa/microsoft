@@ -34,46 +34,57 @@ stages:
       inputs:
         script: |
           docker pull mcr.microsoft.com/windows/servercore:ltsc2019
-          docker image save $(containerRegistry)/servercore2019:latest -o $(Build.ArtifactStagingDirectory)
+        #  docker image save $(containerRegistry)/servercore2019:latest -o $(Build.ArtifactStagingDirectory)
          # docker tag mcr.microsoft.com/windows/servercore:ltsc2019 $(containerRegistry)/servercore2019:latest
     
-    # Publish image to Staging Directory so that it can be consumed by Deploy Stage
-    - task: PublishBuildArtifacts@1
-      displayName: Publish latest image 
+      # Push image to Azure Container Registry (ACR) 
+    - task: AzureCLI@2
+      displayName: 'Tag image and push it to new ACR repo'
       inputs:
-        PathtoPublish: $(Build.ArtifactStagingDirectory)
-        ArtifactName: LatestImage
-        Parallel: true
-        ParallelCount: 10
+        azureSubscription: $(azureSubscription)
+        scriptType: ps
+        scriptLocation: inlineScript
+        inlineScript: |
+          docker images
+          docker push $(containerRegistry)/mcr.microsoft.com/windows/servercore:ltsc2019
 
-# Deploy Stage
-- stage: DeployACR
-  displayName: Deploy image to ACR
-  dependsOn: PullTag
-  condition: succeeded()
-  jobs:
-  - deployment: Deploy
-    displayName: Deploy image to ACR
-    environment: DeployACR
-    timeoutInMinutes: 360
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - checkout: none
+#     # Publish image to Staging Directory so that it can be consumed by Deploy Stage
+#     - task: PublishBuildArtifacts@1
+#       displayName: Publish latest image 
+#       inputs:
+#         PathtoPublish: $(Build.ArtifactStagingDirectory)
+#         ArtifactName: LatestImage
+#         Parallel: true
+#         ParallelCount: 10
 
-          # Download Artifact from Build Stage
-          - download: current
-            artifact: LatestImage
-            displayName: Download artifact containing latest image from Build Stage
+# # Deploy Stage
+# - stage: DeployACR
+#   displayName: Deploy image to ACR
+#   dependsOn: PullTag
+#   condition: succeeded()
+#   jobs:
+#   - deployment: Deploy
+#     displayName: Deploy image to ACR
+#     environment: DeployACR
+#     timeoutInMinutes: 360
+#     strategy:
+#       runOnce:
+#         deploy:
+#           steps:
+#           - checkout: none
 
-          # Push image to Azure Container Registry (ACR) 
-          - task: AzureCLI@2
-            displayName: 'Tag image and push it to new ACR repo'
-            inputs:
-              azureSubscription: $(azureSubscription)
-              scriptType: ps
-              scriptLocation: inlineScript
-              inlineScript: |
-                docker images
-                docker push $(containerRegistry)/mcr.microsoft.com/windows/servercore:ltsc2019
+#           # Download Artifact from Build Stage
+#           - download: current
+#             artifact: LatestImage
+#             displayName: Download artifact containing latest image from Build Stage
+
+#           # Push image to Azure Container Registry (ACR) 
+#           - task: AzureCLI@2
+#             displayName: 'Tag image and push it to new ACR repo'
+#             inputs:
+#               azureSubscription: $(azureSubscription)
+#               scriptType: ps
+#               scriptLocation: inlineScript
+#               inlineScript: |
+#                 docker images
+#                 docker push $(containerRegistry)/mcr.microsoft.com/windows/servercore:ltsc2019
