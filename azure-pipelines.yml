@@ -34,7 +34,7 @@ stages:
       inputs:
         script: |
           docker pull mcr.microsoft.com/windows/servercore:ltsc2019
-          docker image save $(containerRegistry)/servercore2019:latest -o $(Build.ArtifactStagingDirectory)
+        #  docker image save $(containerRegistry)/servercore2019:latest -o $(Build.ArtifactStagingDirectory)
          # docker tag mcr.microsoft.com/windows/servercore:ltsc2019 $(containerRegistry)/servercore2019:latest
     
     # Publish image to Staging Directory so that it can be consumed by Deploy Stage
@@ -76,4 +76,4 @@ stages:
               scriptLocation: inlineScript
               inlineScript: |
                 docker images
-                docker push $(containerRegistry)/servercore2019:latest
+                docker push $(containerRegistry)/mcr.microsoft.com/windows/servercore:ltsc2019
