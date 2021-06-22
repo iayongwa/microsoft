@@ -10,7 +10,7 @@ resources:
 
 pr: none
 
-# Linux OS self-hosted Agent Pool
+# Windows OS self-hosted Agent Pool
 pool: 
   name: Selfhosted-PRC382-AKS
   demands:
