@@ -40,8 +40,8 @@ stages:
       displayName: Pull base image from Docker and tag it 
       inputs:
         script: |
-          docker pull mcr.microsoft.com/windows/servercore:ltsc2019
-          docker tag mcr.microsoft.com/windows/servercore:ltsc2019 $(containerRegistry3)/servercore2019:latest
+          docker pull mcr.microsoft.com/windows/servercore:ltsc2022
+          docker tag mcr.microsoft.com/windows/servercore:ltsc2022 $(containerRegistry3)/servercore2022:latest
     
     # Push tagged image to Azure Container Registry (ACR) 
     - task: AzureCLI@2
@@ -53,4 +53,4 @@ stages:
         inlineScript: |
           az acr login --name $(containerRegistry3)
           docker images
-          docker push $(containerRegistry3)/servercore2019:latest
+          docker push $(containerRegistry3)/servercore2022:latest
