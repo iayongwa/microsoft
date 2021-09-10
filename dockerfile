@@ -3,7 +3,7 @@
 #
 #
 # Pull base image.
-ARG $MYIMAGE= mcr.microsoft.com/windows/servercore:ltsc2022
+ARG $MYIMAGE= mcr.microsoft.com/windows/servercore:ltsc2019
 FROM $MYIMAGE
 
 CMD ["bash"]
