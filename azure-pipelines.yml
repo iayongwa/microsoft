@@ -7,11 +7,11 @@ trigger: none
 
 resources:
   repositories:
-#    - repository: 'MyGitHubRepo' # Any name you want to give the repo of your source code. This will be used be used in the checkout step.
-#      type: github
-#      endpoint: 'MyGitHubServiceConnection'  # Substitute it with name of the service connection to GitHub or external source
-#      name: 'MyGitHubOrgOrUser/MyGitHubRepo'    # Name of Organization or GitHub user / GitHubrepo name
-    - repository: self
+   - repository: 'MyGitHubRepo' # Any name you want to give the repo of your source code. This will be used be used in the checkout step.
+     type: github
+     endpoint: 'GitHub'  # Substitute it with name of the service connection to GitHub or external source
+     name: 'iayongwa/microsoft'    # Name of Organization or GitHub user / GitHubrepo name
+   # - repository: self
 
 pr: none
 
