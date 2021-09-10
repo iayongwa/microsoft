@@ -17,7 +17,7 @@ pr: none
 
 # Windows OS self-hosted Agent Pool
 pool: 
-  name: Selfhosted-PRC382-AKSPlatform-AustraliaEast
+  name: Selfhosted-IDev-PRC382
   demands:
   - agent.os -equals Windows_NT 
 
@@ -41,16 +41,16 @@ stages:
       inputs:
         script: |
           docker pull mcr.microsoft.com/windows/servercore:ltsc2019
-          docker tag mcr.microsoft.com/windows/servercore:ltsc2019 $(containerRegistry3)/servercore2019:latest
+          docker tag mcr.microsoft.com/windows/servercore:ltsc2019 $(containerRegistry1)/servercore2019:latest
     
     # Push tagged image to Azure Container Registry (ACR) 
     - task: AzureCLI@2
       displayName: Push tagged image to new ACR repo'
       inputs:
-        azureSubscription: $(azureSubscription)
+        azureSubscription: $(azureSubscription1)
         scriptType: ps
         scriptLocation: inlineScript
         inlineScript: |
-          az acr login --name $(containerRegistry3)
+          az acr login --name $(containerRegistry1)
           docker images
-          docker push $(containerRegistry3)/servercore2019:latest
+          docker push $(containerRegistry1)/servercore2019:latest
