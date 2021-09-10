@@ -32,8 +32,8 @@ stages:
   - job: PullTag
     displayName: Pull image specified in GitHub's Dockerfile, tag it and push it to ACR
     steps:
-    - checkout: self
-#   - checkout: MyGitHubRepo
+   # - checkout: self
+    - checkout: MyGitHubRepo
 
     # Pull base Windows image from Docker and 
     - task: CmdLine@2
